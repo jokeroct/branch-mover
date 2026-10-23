@@ -1,0 +1,229 @@
+/* Folder picker */
+.gcm-picker-title {
+	padding: var(--size-4-3) var(--size-4-4) 0;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-semibold);
+}
+
+/* Confirmation dialog */
+.gcm-modal .gcm-section-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--size-4-2);
+	margin: var(--size-4-3) 0 var(--size-4-1);
+	font-weight: var(--font-semibold);
+}
+
+.gcm-modal .gcm-select-links {
+	display: flex;
+	gap: var(--size-4-3);
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-normal);
+}
+
+.gcm-modal .gcm-list {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.gcm-modal .gcm-levels {
+	display: flex;
+}
+
+.gcm-modal .gcm-levels button {
+	min-width: 3em;
+	border-radius: 0;
+	box-shadow: none;
+	border: 1px solid var(--background-modifier-border);
+}
+
+.gcm-modal .gcm-levels button + button {
+	border-left: none;
+}
+
+.gcm-modal .gcm-levels button:first-child {
+	border-radius: var(--radius-s) 0 0 var(--radius-s);
+}
+
+.gcm-modal .gcm-levels button:last-child {
+	border-radius: 0 var(--radius-s) var(--radius-s) 0;
+}
+
+.gcm-modal .gcm-levels button.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+.gcm-modal .gcm-count {
+	margin-left: var(--size-4-1);
+	color: var(--text-muted);
+	font-weight: var(--font-normal);
+}
+
+.gcm-modal .gcm-level-header {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	padding: var(--size-4-1) var(--size-4-3);
+	background: var(--background-secondary);
+	border-bottom: 1px solid var(--background-modifier-border);
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	font-weight: var(--font-semibold);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.gcm-modal .gcm-level-empty,
+.gcm-modal .gcm-skipped {
+	padding: var(--size-4-2) var(--size-4-3);
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.gcm-modal .gcm-skipped {
+	padding-left: 0;
+}
+
+/* Keep the whole dialog on screen: the file list takes whatever height is left and scrolls. */
+.modal.gcm-modal {
+	display: flex;
+	flex-direction: column;
+	max-height: 90vh;
+}
+
+.gcm-modal .modal-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+.gcm-modal .modal-content > * {
+	flex: none;
+}
+
+.gcm-modal .modal-content > .gcm-children {
+	flex: 1 1 auto;
+	min-height: 140px;
+	overflow-y: auto;
+}
+
+.gcm-modal .gcm-row {
+	padding: var(--size-4-2) var(--size-4-3);
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.gcm-modal .gcm-row:last-child {
+	border-bottom: none;
+}
+
+.gcm-modal .gcm-row-main {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-2);
+	cursor: pointer;
+}
+
+.gcm-modal .gcm-row-main.is-disabled {
+	cursor: default;
+}
+
+.gcm-modal .gcm-row-main input {
+	flex: none;
+	margin: 0;
+}
+
+.gcm-modal .gcm-row-icon {
+	display: flex;
+	flex: none;
+	color: var(--text-muted);
+}
+
+.gcm-modal .gcm-row-icon svg {
+	width: var(--icon-s);
+	height: var(--icon-s);
+}
+
+.gcm-modal .gcm-row-name {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.gcm-modal .gcm-row.is-unselected .gcm-row-name {
+	color: var(--text-muted);
+}
+
+.gcm-modal .gcm-row-where {
+	flex: none;
+	max-width: 35%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--text-faint);
+	font-size: var(--font-ui-smaller);
+}
+
+.gcm-modal .gcm-row-info,
+.gcm-modal .gcm-row-dest,
+.gcm-modal .gcm-row-clash {
+	padding-left: calc(var(--checkbox-size) + var(--icon-s) + var(--size-4-4));
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.gcm-modal .gcm-row-dest {
+	color: var(--text-accent);
+}
+
+.gcm-modal .gcm-row-clash {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--size-4-2);
+	margin-top: var(--size-4-1);
+}
+
+.gcm-modal .gcm-row-clash.is-undecided .gcm-clash-message {
+	color: var(--text-warning);
+}
+
+.gcm-modal .gcm-badge {
+	flex: none;
+	margin-left: var(--size-4-2);
+	padding: 0 var(--size-4-1);
+	border-radius: var(--radius-s);
+	background: var(--background-modifier-hover);
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.gcm-modal .gcm-row-main .gcm-badge {
+	margin-left: 0;
+}
+
+.gcm-modal .gcm-summary {
+	margin-top: var(--size-4-4);
+}
+
+.gcm-modal .gcm-summary.mod-warning,
+.gcm-modal .gcm-link-note.mod-warning {
+	color: var(--text-warning);
+}
+
+/* Obsidian keeps a disabled call-to-action button at full colour; make it read as unavailable. */
+.gcm-modal button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.gcm-modal .gcm-link-note {
+	margin-top: var(--size-4-1);
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+}

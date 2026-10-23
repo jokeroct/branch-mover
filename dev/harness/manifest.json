@@ -1,0 +1,9 @@
+{
+  "id": "gcm-dev-harness",
+  "name": "Branch Mover – dev test harness",
+  "version": "0.0.1",
+  "minAppVersion": "1.14.4",
+  "description": "Dev-vault only. Drives Branch Mover through the graph menu and dialogs and records the results.",
+  "author": "",
+  "isDesktopOnly": true
+}
