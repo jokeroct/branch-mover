@@ -1,6 +1,6 @@
 {
   "name": "branch-mover",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Right-click a note in Graph View to move its branch of linked notes into folders, with links kept intact.",
   "author": "MON.D.SAMA",
