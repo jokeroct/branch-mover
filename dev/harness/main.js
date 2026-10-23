@@ -46,7 +46,7 @@ const BINARIES = {
 
 module.exports = class GcmDevHarness extends Plugin {
 	onload() {
-		for (const name of ["ui", "moveNew", "moveExisting"]) {
+		for (const name of ["ui", "moveNew", "moveExisting", "settings"]) {
 			this.addCommand({ id: name, name: `Run check: ${name}`, callback: () => this.run([name]) });
 		}
 		// Runs the checks named in .gcm-run-checks (on startup, and whenever the file appears), then
@@ -387,6 +387,49 @@ module.exports = class GcmDevHarness extends Plugin {
 			notice: r.notice.startsWith("Moved 8 files"),
 			noPrompts: r.linkPrompts === 0,
 			saysLinksUpdate: r.confirm.linkNote.startsWith("Links to the moved files are updated automatically"),
+		};
+		r.pass = Object.values(r.checks).every(Boolean);
+		return r;
+	}
+
+	/** The plugin's settings page: a Support section whose button would open the Ko-fi page. */
+	async settings() {
+		const r = (this.partial = {});
+		const setting = this.app.setting;
+		setting.open();
+		setting.openTabById(PLUGIN_ID);
+		const content = await this.waitFor(() => {
+			const el = setting.activeTab?.containerEl;
+			return el?.isConnected && el.querySelector("button") ? el : null;
+		}, 5000, "Branch Mover settings tab");
+		await sleep(300);
+		// Settings opens in its own window in Obsidian 1.14, so look in the tab's own document.
+		r.tabTitle = content.ownerDocument.querySelector(".vertical-tab-nav-item.is-active")?.textContent ?? null;
+		r.headings = [...content.querySelectorAll(".setting-item-heading .setting-item-name, .setting-group-heading, h1, h2, h3")].map((el) => el.textContent);
+		r.text = content.innerText.replace(/\s*\n+\s*/g, " | ");
+		const button = [...content.querySelectorAll("button")].find((b) => b.textContent.includes("Ko-fi"));
+		r.buttonText = button?.textContent ?? null;
+		r.buttonHasIcon = !!button?.querySelector(".gcm-kofi-icon svg");
+		r.shot = await this.shotWindow("8-settings", content.ownerDocument);
+		// Record what the button would open without leaving Obsidian.
+		const opened = [];
+		const realOpen = window.open;
+		window.open = (url) => {
+			opened.push(String(url));
+			return null;
+		};
+		try {
+			button?.click();
+		} finally {
+			window.open = realOpen;
+		}
+		r.opened = opened;
+		setting.close();
+		r.checks = {
+			ownTab: r.tabTitle === "Branch Mover",
+			supportSection: r.text.includes("Support") && r.text.includes("Support Branch Mover"),
+			buttonWithIcon: r.buttonText === "Support me on Ko-fi" && r.buttonHasIcon,
+			opensKofi: opened.length === 1 && opened[0] === "https://ko-fi.com/mdsama",
 		};
 		r.pass = Object.values(r.checks).every(Boolean);
 		return r;
@@ -739,6 +782,30 @@ module.exports = class GcmDevHarness extends Plugin {
 			if (value) return value;
 			if (Date.now() > end) throw new Error(`Timed out waiting for ${what}`);
 			await sleep(100);
+		}
+	}
+
+	/** Like shot(), for the window that shows `doc` (Settings has its own window). */
+	async shotWindow(name, doc) {
+		if (doc === document) return this.shot(name);
+		try {
+			await sleep(300);
+			const { remote } = require("electron");
+			const contents = remote.webContents.getAllWebContents().find((c) => {
+				try {
+					return c.getTitle() === doc.title && c.getURL() === doc.defaultView.location.href;
+				} catch {
+					return false;
+				}
+			});
+			if (!contents) return "screenshot failed: settings window not found";
+			const png = (await contents.capturePage()).toPNG();
+			const { adapter } = this.app.vault;
+			if (!(await adapter.exists(SHOTS))) await adapter.mkdir(SHOTS);
+			await adapter.writeBinary(`${SHOTS}/${name}.png`, png.buffer.slice(png.byteOffset, png.byteOffset + png.byteLength));
+			return `${SHOTS}/${name}.png`;
+		} catch (error) {
+			return `screenshot failed: ${error?.message ?? error}`;
 		}
 	}
 

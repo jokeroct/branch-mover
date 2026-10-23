@@ -10,11 +10,11 @@ import process from "node:process";
 const root = resolve(import.meta.dirname, "..");
 const [vaultArg, ...requested] = process.argv.slice(2);
 if (!vaultArg) {
-	console.error("Usage: node scripts/dev-test.mjs path/to/vault [ui moveNew moveExisting]");
+	console.error("Usage: node scripts/dev-test.mjs path/to/vault [ui moveNew moveExisting settings]");
 	process.exit(1);
 }
 const vault = resolve(vaultArg);
-const checks = requested.length > 0 ? requested : ["ui", "moveNew", "moveExisting"];
+const checks = requested.length > 0 ? requested : ["ui", "moveNew", "moveExisting", "settings"];
 const config = join(vault, ".obsidian");
 if (!existsSync(config)) {
 	console.error(`No .obsidian folder in ${vault}.`);

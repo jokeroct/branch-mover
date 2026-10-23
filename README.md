@@ -4,6 +4,8 @@ Right-click a note in Obsidian's Graph View and move its branch (the notes it li
 
 Handy when a topic has grown in the vault root: pick the topic note in the graph, and its notes are filed in one step.
 
+[![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/mdsama)
+
 ## How to use
 
 1. Open **Graph View** (or the local graph) and right-click a note: **Move child notes to folder**.
@@ -11,6 +13,8 @@ Handy when a topic has grown in the vault root: pick the topic note in the graph
 3. Check the list and click **Move**. Nothing is moved, and no folder is created, until you do.
 
 The same dialog is available from the command palette: **Move child notes of the current note to a folder**.
+
+Branch Mover has nothing to configure. Its page in Settings only holds a **Support me on Ko-fi** button.
 
 ## What moves
 

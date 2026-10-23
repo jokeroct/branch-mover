@@ -3,6 +3,7 @@ import { FolderPickerModal } from "./folder-picker";
 import { FolderExistsModal, MoveConfirmModal } from "./modals";
 import { type FileMove, describeOutcome, ensureFolder, runMoves, takenPaths } from "./mover";
 import { directChildren, numberedFolder, siblingFolder } from "./plan";
+import { BranchMoverSettingTab } from "./settings-tab";
 
 /** The `source` Obsidian passes to `file-menu` when a node is right-clicked in the graph or local graph. */
 const GRAPH_MENU = "graph-context-menu";
@@ -23,6 +24,8 @@ export default class BranchMoverPlugin extends Plugin {
 				);
 			}),
 		);
+
+		this.addSettingTab(new BranchMoverSettingTab(this.app, this));
 
 		this.addCommand({
 			id: "move-child-notes",

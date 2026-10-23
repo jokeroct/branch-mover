@@ -6,6 +6,22 @@
 	font-weight: var(--font-semibold);
 }
 
+/* Settings: the Ko-fi button, a coffee icon beside the text */
+.gcm-kofi-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.gcm-kofi-button .gcm-kofi-icon {
+	display: inline-flex;
+}
+
+.gcm-kofi-button .gcm-kofi-icon svg {
+	width: var(--icon-s);
+	height: var(--icon-s);
+}
+
 /* Confirmation dialog */
 .gcm-modal .gcm-section-header {
 	display: flex;
